@@ -1,0 +1,10 @@
+body {
+	padding-top: 80px;
+}
+
+footer, footer a {
+    text-align: right;
+    color: #eee;
+    text-shadow: 1px 1px 1px #ccc;
+}
+
