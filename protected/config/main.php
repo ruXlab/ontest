@@ -31,8 +31,8 @@ $config = array(
 		),
 		'singly' => array(
 			'class' => 'Singly',
-			'clientId' => '',
-			'clientSecret' => '',
+			'client_id' => '',
+			'client_secret' => '',
 		),
 		// uncomment the following to enable URLs in path-format
 		/*

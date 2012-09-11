@@ -1,10 +1,7 @@
 <?php
 require_once('OAuth2/Client.php');
-// Set his is the URL of this file (http://yourdomain.com/index.php, for example)
-const REDIRECT_URI = '';
-
-// The service you want the user to authenticate with
-const SERVICE = 'facebook';
+require_once('OAuth2/GrantType/IGrantType.php');
+require_once('OAuth2/GrantType/AuthorizationCode.php');
 
 
 class Singly extends OAuth2\Client {
@@ -16,10 +13,11 @@ class Singly extends OAuth2\Client {
 	}
 
 	public function init() {
-		
+
 	}
 
 	public function setClientId($client_id) {
+		
 		$this->client_id = $client_id;
 	}
 
@@ -27,4 +25,8 @@ class Singly extends OAuth2\Client {
 		$this->client_secret = $client_secret;
 	}
 
+	public function getAuthServiceUrl($redirect, $service) {
+		return $this->getAuthenticationUrl(self::$AUTHORIZATION_ENDPOINT, $redirect) 
+				. "&service={$service}";				
+	} 
 }

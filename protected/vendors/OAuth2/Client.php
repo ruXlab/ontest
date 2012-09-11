@@ -71,14 +71,14 @@ class Client
      *
      * @var string
      */
-    protected $client_id = null;
+    public $client_id = null;
 
     /**
      * Client Secret
      *
      * @var string
      */
-    protected $client_secret = null;
+    public $client_secret = null;
 
     /**
      * Client Authentication method

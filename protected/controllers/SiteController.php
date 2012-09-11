@@ -63,27 +63,22 @@ class SiteController extends Controller {
 	/**
 	 * Displays the login page
 	 */
-	public function actionLogin()
-	{
-		$model=new LoginForm;
+	public function actionLogin($type = 'facebook') {
+		$authUrl = Yii::app()->singly->getAuthServiceUrl($this->getCallbackUrl(), $type);
+		$this->redirect($authUrl);
+	}
 
-		// if it is ajax validation request
-		if(isset($_POST['ajax']) && $_POST['ajax']==='login-form')
-		{
-			echo CActiveForm::validate($model);
-			Yii::app()->end();
-		}
+	public function actionCallback() {
+		$params = array('code' => @$_GET['code'], 'redirect_uri' => $this->getCallbackUrl());
 
-		// collect user input data
-		if(isset($_POST['LoginForm']))
-		{
-			$model->attributes=$_POST['LoginForm'];
-			// validate user input and redirect to the previous page if valid
-			if($model->validate() && $model->login())
-				$this->redirect(Yii::app()->user->returnUrl);
-		}
-		// display the login form
-		$this->render('login',array('model'=>$model));
+		$response = Yii::app()->singly->getAccessToken(Singly::$TOKEN_ENDPOINT, 'authorization_code', $params);
+
+		Yii::app()->session['token'] = $response['result']['access_token'];
+		print_r($response);
+	}
+
+	private function getCallbackUrl() {
+		return "http://{$_SERVER['HTTP_HOST']}/?r=site/callback";
 	}
 
 	/**
