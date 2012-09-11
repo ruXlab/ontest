@@ -1,4 +1,5 @@
 <?php
+require_once('OAuth2/Client.php');
 
 class SiteController extends Controller
 {
@@ -27,6 +28,8 @@ class SiteController extends Controller
 	 */
 	public function actionIndex()
 	{
+
+		print_r(new OAuth2\Client());
 		// renders the view file 'protected/views/site/index.php'
 		// using the default layout 'protected/views/layouts/main.php'
 		$this->render('index');

@@ -7,7 +7,6 @@
     <meta name="author" content="ruX[Ruslan Zaharov]">
     <link href="/bootstrap/css/bootstrap.css" rel="stylesheet">
     <link href="/bootstrap/css/bootstrap-responsive.css" rel="stylesheet">        
-    <link href="/assets/main.css" rel="stylesheet">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">    
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.1/jquery.min.js"></script> 
     <link href="/css/main.css" rel="stylesheet">
@@ -48,11 +47,9 @@
 
 	<div class="clear"></div>
 
-	<div id="footer">
-		Copyright &copy; <?php echo date('Y'); ?> by My Company.<br/>
-		All Rights Reserved.<br/>
-		<?php echo Yii::powered(); ?>
-	</div><!-- footer -->
+      <footer>
+        <p><a href="http://ruX.pp.ru">&copy; ruX, 2012</a></p>
+      </footer>      
 
 </div><!-- page -->
 
