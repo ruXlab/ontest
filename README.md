@@ -1,2 +1,2 @@
-ontest
+Test task for startup.
 ======
