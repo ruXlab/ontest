@@ -6,9 +6,9 @@ Yii::setPathOfAlias('OAuth2',Yii::getPathOfAlias('application.vendors.OAuth2'));
 
 // This is the main Web application configuration. Any writable
 // CWebApplication properties can be configured here.
-return array(
+$config = array(
 	'basePath'=>dirname(__FILE__).DIRECTORY_SEPARATOR.'..',
-	'name'=>'My Web Application',
+	'name'=>'Yii/Singly demo app',
 
 	// preloading 'log' component
 	'preload'=>array('log'),
@@ -27,7 +27,12 @@ return array(
 	'components'=>array(
 		'user'=>array(
 			// enable cookie-based authentication
-			'allowAutoLogin'=>true,
+			'allowAutoLogin' => true,
+		),
+		'singly' => array(
+			'class' => 'Singly',
+			'clientId' => '',
+			'clientSecret' => '',
 		),
 		// uncomment the following to enable URLs in path-format
 		/*
@@ -64,7 +69,11 @@ return array(
 	// application-level parameters that can be accessed
 	// using Yii::app()->params['paramName']
 	'params'=>array(
-		// this is used in contact page
-		'adminEmail'=>'webmaster@example.com',
 	),
 );
+$envFilename = dirname(__FILE__).'/env.php';
+if (file_exists($envFilename)) {
+	$config = CMap::mergeArray($config, require($envFilename));
+}
+
+return $config;

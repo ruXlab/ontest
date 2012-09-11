@@ -2,3 +2,4 @@ assets/
 protected/runtime/
 themes/
 framework
+protected/config/env.php
