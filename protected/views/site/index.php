@@ -5,7 +5,7 @@
 			<?php echo CHtml::link('Login via facebook', 
 					array('site/login', 'type' => 'facebook'), 
 					array('class' => "btn btn-primary btn-large"));?>
-			<?php echo CHtml::link('Login via facebook', 
+			<?php echo CHtml::link('Login via google', 
 					array('site/login', 'type' => 'google'), 
 					array('class' => "btn btn-danger btn-large"));?>
 		</p>        
