@@ -1,2 +1,2 @@
-Test task for startup.
+Example of use Singly and Yii framework
 ======
