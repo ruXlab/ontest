@@ -98,7 +98,21 @@ class SiteController extends Controller {
 	   		$tmpl['photos'][] = $p;
 	   	}
 
-	   	print_r($tmpl);
+	    $people = Yii::app()->singly->fetch('https://api.singly.com/v0/types/contacts', array(
+	    	'limit' => 50
+	    ));
+	    foreach($people['result'] as $someone) {
+	    	$s = array(
+	    		'name' => @$someone['data']['name'],
+	    		'link' => @$someone['data']['link'],
+	    		'bio' => @$someone['data']['bio'],
+	    		'photo' => @$someone['data']['photo'],
+	    		//'s' => $someone['data']
+	    	);
+	    	$tmpl['people'][] = $s;
+	    }
+
+	   	//print_r($tmpl);
 	   	$this->render('facebook', $tmpl);
 	}
 
