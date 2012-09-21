@@ -48,9 +48,12 @@ class SiteController extends Controller {
 	}
 
 	/**
-	 * Displays the login page
+	 * Redirect to right way
 	 */
-	public function actionLogin($type = 'facebook') {
+	public function actionLogin($type) {
+		$type = @$_GET['type'];
+		if (!$type)
+			return $this->redirect(array('site/index'));
 		Yii::app()->session['type'] = $type;
 		$authUrl = Yii::app()->singly->getAuthServiceUrl($this->getCallbackUrl(), $type);
 		$this->redirect($authUrl);
@@ -58,6 +61,8 @@ class SiteController extends Controller {
 
 	public function actionCallback() {
 		$params = array('code' => @$_GET['code'], 'redirect_uri' => $this->getCallbackUrl());
+		print_r($_GET);
+		//die('aaaaaaaa');
 		if (!$params['code'] || !@Yii::app()->session['type']) {
 			unset(Yii::app()->session['type']);
 			return $this->redirect(array('site/index'));
@@ -71,7 +76,7 @@ class SiteController extends Controller {
  			case 'facebook':
  				return $this->redirect(array('site/facebook'));
  				break;
- 			case 'google':
+ 			case 'gcontacts':
  				return $this->redirect(array('site/google'));
  				break;
 	 		}
@@ -117,9 +122,23 @@ class SiteController extends Controller {
 	}
 
 	public function actionGoogle() {
-		if (@Yii::app()->session['type'] != 'google') {
+		if (@Yii::app()->session['type'] != 'gcontacts') {
 			return $this->redirect(array('site/index'));
 		}
+	    $people = Yii::app()->singly->fetch('https://api.singly.com/v0/types/contacts', array(
+	    	'limit' => 50
+	    ));
+	    foreach($people['result'] as $someone) {
+	    	$s = array(
+	    		'name' => @$someone['data']['name'],
+	    		'link' => @$someone['data']['link'],
+	    		'bio' => @$someone['data']['bio'],
+	    		'photo' => @$someone['data']['photo'],
+	    		//'s' => $someone['data']
+	    	);
+	    	//$tmpl['people'][] = $s;
+	    }
+	    print_r($people);
 	}
 
 	private function getCallbackUrl() {
