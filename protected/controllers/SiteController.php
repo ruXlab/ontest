@@ -125,20 +125,35 @@ class SiteController extends Controller {
 		if (@Yii::app()->session['type'] != 'gcontacts') {
 			return $this->redirect(array('site/index'));
 		}
-	    $people = Yii::app()->singly->fetch('https://api.singly.com/v0/types/contacts', array(
-	    	'limit' => 50
+
+	    $profiles = Yii::app()->singly->fetch('https://api.singly.com/v0/profiles/gcontacts', array(
+	    	'auth' => true,
 	    ));
+	    $gToken = ($profiles['result']['auth']['accessToken']);
+
+	    //Yii::app()->singly->client_secret = $gToken;
+	    $people = Yii::app()->singly->fetch('https://api.singly.com/v0/services/gcontacts/contacts', array(
+	    	'limit' => 50,
+	    	'access_token' => $gToken, 
+	    ));
+
+	    $contacts = array();
+
 	    foreach($people['result'] as $someone) {
 	    	$s = array(
-	    		'name' => @$someone['data']['name'],
-	    		'link' => @$someone['data']['link'],
-	    		'bio' => @$someone['data']['bio'],
-	    		'photo' => @$someone['data']['photo'],
-	    		//'s' => $someone['data']
+	    		'name' => @$someone['data']['title']['$t'],
+	    		'email' => @$someone['data']['gd$email'][0]['address'],
+	    		'phone' => @$someone['data']['gd$phoneNumber'][0]['$t'],
+	    		'photo' => @$someone['data']['link'][0]['href'],
 	    	);
-	    	//$tmpl['people'][] = $s;
+	    	if ($s['photo']) $s['photo'] .= "&access_token={$gToken}"; 
+	    	$contacts[] = $s;
 	    }
-	    print_r($people);
+	    print_r($contacts);
+	    $this->render('gcontacts', array(
+	    	'contacts' => $contacts,
+	    ));
+	    //print_r($contacts);
 	}
 
 	private function getCallbackUrl() {
