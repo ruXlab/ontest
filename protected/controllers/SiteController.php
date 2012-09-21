@@ -149,11 +149,10 @@ class SiteController extends Controller {
 	    	if ($s['photo']) $s['photo'] .= "&access_token={$gToken}"; 
 	    	$contacts[] = $s;
 	    }
-	    print_r($contacts);
+	    // print_r($contacts);
 	    $this->render('gcontacts', array(
 	    	'contacts' => $contacts,
 	    ));
-	    //print_r($contacts);
 	}
 
 	private function getCallbackUrl() {
